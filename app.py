@@ -15,14 +15,16 @@ def process_user_data(user_data):
     result = {
         "name": user_data['name'].upper(),
         "email": user_data['email'].lower(),
-        "status": "active"
+        "status": get_user_status(age)  # NEW: using new function
     }
     
-    print(f"Processing user: {result['name']}")
-    print(f"Email: {result['email']}")
+    print(f"Processing user: {processed_data['name']}")
+    print(f"Email: {processed_data['email']}")
+    print(f"Status: {processed_data['status']}")
     
-    return result
+    return processed_data
 
 if __name__ == "__main__":
     user = {"name": "John", "email": "JOHN@EXAMPLE.com", "age": 25}
-    print(process_user_data(user))
+    result = process_user_data(user)
+    print(result)
