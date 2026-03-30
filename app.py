@@ -5,6 +5,23 @@ def validate_email(email):
         return False
     return True
 
+def validate_age(age):
+    """Validate age"""
+    try:
+        age_int = int(age)
+        return age_int >= 0
+    except (ValueError, TypeError):
+        return False
+
+def get_user_status(age):
+    """NEW FEATURE: Determine user status based on age"""
+    if age >= 18:
+        return "adult"
+    elif age >= 13:
+        return "teen"
+    else:
+        return "child"
+
 def process_user_data(user_data):
     if not validate_email(user_data['email']):
         return {"error": "Invalid email"}
