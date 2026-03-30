@@ -1,6 +1,7 @@
 import requests
 
 def validate_email(email):
+    """Validate email format"""
     if "@" not in email:
         return False
     return True
@@ -23,13 +24,21 @@ def get_user_status(age):
         return "child"
 
 def process_user_data(user_data):
-    if not validate_email(user_data['email']):
+    """Process user data with validation"""
+    # REFACTOR: renamed variable from result to processed_data for clarity
+    if not validate_email(user_data.get('email', '')):
         return {"error": "Invalid email"}
     
-    if user_data['age'] < 18:
+    # FIX: added error handling for missing age field
+    try:
+        age = int(user_data.get('age', 0))
+    except (ValueError, TypeError):
+        return {"error": "Invalid age format"}
+    
+    if age < 18:
         return {"error": "Too young"}
     
-    result = {
+    processed_data = {
         "name": user_data['name'].upper(),
         "email": user_data['email'].lower(),
         "status": get_user_status(age)  # NEW: using new function
